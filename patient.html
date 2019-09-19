@@ -51,41 +51,7 @@
         </div>
     </div>
     </div>
-    </div>
-    
-    <!--display table-->
-    <div class="card" style="padding-bottom: 10px;margin-bottom: 10px;">
-      <h5 class="card-header">Patient History</h5>
-        <form name="" submit="return addRecords()" style="margin-left:10px;">
-            <div class="form-row">
-              <div class="form-group col-md-7">
-                <br>
-                <input type="text" class="form-control" id="cond" placeholder="Condition/Diagnosis">
-              </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-7">
-                    <input type="text" class="form-control" id="med" placeholder="Medicine & Dosage">
-                </div>
-            </div>
-            <div class="form-row">
-              <span class="form-group col-md-2">
-                  <input class="form-control" type="text" id="ds" onfocus="(this.type='date')"placeholder="Date Started">
-              </span>
-              <span class="form-group col-md-2">
-                  <input class="form-control" type="text" id="de" onfocus="(this.type='date')"placeholder="Date Stopped">
-              </span>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-7">
-                    <input type="text" class="form-control" id="phy" placeholder="Prescribing Physician">
-                </div>
-            </div>
-            <button class="btn btn-primary col-md-2" onclick="return addRecords()">Add Record</button>
-            <br>
-        </form>
-      </div>
-     <div id="printfile" >
+     
     <div id="medHistory" class="card">
         <table class="table col-sm-auto">
         <thead>
@@ -102,6 +68,39 @@
     </table>    
   </div>
   </div>  
+
+  <!--display table-->
+  <div class="card" style="padding-bottom: 10px;margin-bottom: 10px;">
+    <h5 class="card-header">Patient History</h5>
+      <form name="" submit="return addRecords()" style="margin-left:10px;">
+          <div class="form-row">
+            <div class="form-group col-md-7">
+              <br>
+              <input type="text" class="form-control" id="cond" placeholder="Condition/Diagnosis">
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-7">
+                  <input type="text" class="form-control" id="med" placeholder="Medicine & Dosage">
+              </div>
+          </div>
+          <div class="form-row">
+            <span class="form-group col-md-2">
+                <input class="form-control" type="text" id="ds" onfocus="(this.type='date')"placeholder="Date Started">
+            </span>
+            <span class="form-group col-md-2">
+                <input class="form-control" type="text" id="de" onfocus="(this.type='date')"placeholder="Date Stopped">
+            </span>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-7">
+                  <input type="text" class="form-control" id="phy" placeholder="Prescribing Physician">
+              </div>
+          </div>
+          <button class="btn btn-primary col-md-2" onclick="return addRecords()">Add Record</button>
+          <br>
+      </form>
+    </div>
   
           <!-- Bootstrap core JavaScript
     ================================================== -->
