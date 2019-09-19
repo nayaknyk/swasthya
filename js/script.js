@@ -19,9 +19,9 @@ function createAccount(){
 firebase
   .auth()
   .createUserWithEmailAndPassword(data.email, data.password)
-  .then( function(user){
-    alert("User account created successfully");
-    window.location.replace("index.html")
+  .then(function(){
+    alert("User account created!Add your info");
+    window.location.replace("signin2.html")
   })
   .catch(function(error){
     alert("Error creating user:", error);
@@ -52,5 +52,26 @@ firebase
   .catch(function(error){
     window.alert("Login Failed!", error);
   });
+    return false;
+}
+
+//add details
+function addDetails(){
+    var db = firebase.firestore();
+    var user_ref = db.collection("user").doc("001");
+
+              
+    var userdata = {
+        name : $('#name').val(),
+        dob : $('#dob').val(),
+        btype : $('#btype').val()
+    }
+    console.log(userdata);
+    user_ref.set(userdata).then(function(){
+        window.alert("User details Added"),
+        window.location.replace("home.html");
+    }).catch(function(error){
+        window.alert("Error Adding Info");
+    });
     return false;
 }
