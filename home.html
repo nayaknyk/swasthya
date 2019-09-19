@@ -75,7 +75,7 @@
               <li>See Hospitals and Pharmacies</li>
               <li>Emergency Numbers</li>
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-outline-danger">Search Now</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-danger" onclick="return loadNearme()">Search Now</button>
           </div>
         </div>
       </div>
@@ -85,7 +85,19 @@
           <p id="foot">Made by CodeMeisters | 2019</p>
       </footer>
     </div>
+<script>
+function loadSymptom(){
+    window.location.replace("http://swasthya.rf.gd/SampleAvatar/?i=1");
+}   
 
+function loadNetmeds(){
+    window.location.replace("")
+}
+
+function loadNearme(){
+    window.location.replace("https://www.google.com/maps/search/?api=1&query=hospital|pharmacy");
+}
+</script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
