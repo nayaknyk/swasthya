@@ -86,6 +86,7 @@ if((doc.exists)){
     }else{window.alert("User not Found");}
 });
 //populate table
+if(document.title == "Swasthya | Patient History"){
 var patient_ref = db.collection("user").doc("001").collection("patient history");
     patient_ref.get().then(function(obj){
         obj.forEach(function(doc){
@@ -126,7 +127,7 @@ var patient_ref = db.collection("user").doc("001").collection("patient history")
     }).catch(function(error){
         window.alert(error.toString());
     });
-
+}
 //add medical history
 function addRecords(){
     var data = {
