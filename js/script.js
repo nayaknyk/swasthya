@@ -59,8 +59,7 @@ firebase
 function addDetails(){
     var db = firebase.firestore();
     var user_ref = db.collection("user").doc("001");
-
-              
+        
     var userdata = {
         name : $('#name').val(),
         dob : $('#dob').val(),
@@ -72,6 +71,79 @@ function addDetails(){
         window.location.replace("home.html");
     }).catch(function(error){
         window.alert("Error Adding Info");
+    });
+    return false;
+}
+//populate fields
+var db = firebase.firestore();
+var user_ref = db.collection("user").doc("001");
+user_ref.get().then(function(doc){
+if((doc.exists)){
+        var user = doc.data();
+        document.getElementById("lname").innerHTML = "Name: "+user.name;
+        document.getElementById("ldob").innerHTML = "DOB: "+user.dob;
+        document.getElementById("lbtype").innerHTML = "Blood Type: "+user.btype;
+    }else{window.alert("User not Found");}
+});
+//populate table
+var patient_ref = db.collection("user").doc("001").collection("patient history");
+    patient_ref.get().then(function(obj){
+        obj.forEach(function(doc){
+            var medhistory = doc.data();
+            var rownode = document.createElement("TR");
+            //cond
+            var dnode1 = document.createElement("TD"); 
+            var d1 = document.createTextNode(medhistory.cond);
+            dnode1.appendChild(d1);
+            rownode.appendChild(dnode1);
+            document.getElementById("tbody").appendChild(rownode);
+            //start date
+            dnode1 = document.createElement("TD"); 
+            d1 = document.createTextNode(medhistory.start_date);
+            dnode1.appendChild(d1);
+            rownode.appendChild(dnode1);
+            document.getElementById("tbody").appendChild(rownode);
+            //medication
+            dnode1 = document.createElement("TD"); 
+            d1 = document.createTextNode(medhistory.med);
+            dnode1.appendChild(d1);
+            rownode.appendChild(dnode1);
+            document.getElementById("tbody").appendChild(rownode);
+            //end date
+            dnode1 = document.createElement("TD"); 
+            d1 = document.createTextNode(medhistory.end_date);
+            dnode1.appendChild(d1);
+            rownode.appendChild(dnode1);
+            document.getElementById("tbody").appendChild(rownode);
+            //physician
+            dnode1 = document.createElement("TD"); 
+            d1 = document.createTextNode(medhistory.phy);
+            dnode1.appendChild(d1);
+            rownode.appendChild(dnode1);
+            document.getElementById("tbody").appendChild(rownode);
+        });
+        
+    }).catch(function(error){
+        window.alert(error.toString());
+    });
+
+//add medical history
+function addRecords(){
+    var data = {
+        cond : $('#cond').val(),
+        start_date : $('#de').val(),
+        end_date : $('#ds').val(),
+        med : $('#med').val(),
+        phy : $('#phy').val()
+        
+    }
+    var db = firebase.firestore();
+    var i = (Math.random()*1000).toString();
+    db.collection("user").doc("001").collection("patient history").doc('abc'+i).set(data).then(function(){
+      window.alert("Record Added");
+      location.reload();
+    }).catch(function(error){
+        window.alert(error.toString);
     });
     return false;
 }
