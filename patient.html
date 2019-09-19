@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
-    <script src="html2pdf.js-master\dist\html2pdf.bundle.min.js"></script>
+    <script src="dist\html2pdf.bundle.min.js"></script>
 
     <title>Swasthya | Patient History</title>
 
@@ -33,12 +33,13 @@
         <button type="button" class="btn btn-success" onclick="printpdf()">Print Patient History</button>
         <script>
             function printpdf(){
-                var element = document.getElementById("MedHistory");
+                var element = document.getElementById("printfile");
                 html2pdf(element);
             }
         </script>
     </div>
     
+    <div id="printfile">
     <div style="margin: 10px; padding-bottom: 10px;">
     <!--Display User details-->
     <div class="card" style="padding-bottom: 10px;margin-bottom: 10px;">
@@ -48,6 +49,8 @@
         <label id="ldob">DOB:</label><br>
         <label id="lbtype">Blood Type:</label>
         </div>
+    </div>
+    </div>
     </div>
     
     <!--display table-->
@@ -82,7 +85,7 @@
             <br>
         </form>
       </div>
-        
+     <div id="printfile" >
     <div id="medHistory" class="card">
         <table class="table col-sm-auto">
         <thead>
@@ -98,7 +101,8 @@
         </tbody>
     </table>    
   </div>
-    </div>
+  </div>  
+  
           <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
