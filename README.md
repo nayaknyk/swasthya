@@ -4,7 +4,6 @@ Swasthya is an all in one healthcare app designed to assist the average user in 
 
 Disclaimer: we are not associated or affiliated in any way to NetMeds, but feel the features they provide would be essential/ideal if we had the time to implement the same.
 
-Google maps, search API and Places API is used to provide geolocation information.
 Symptom Checker was implemented using ApiMedic API.
 Medical History is prepared using Print2PDF API.
 X-frame-bypass is used to provide proxy server.
