@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Swasthya
 
 Swasthya is an all in one healthcare app designed to assist the average user in making medical decisions. 
