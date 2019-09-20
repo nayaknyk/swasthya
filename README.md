@@ -28,7 +28,8 @@ B. Patient History
  Redirects to NetMeds website which allows you to order medicines online with home delivery.
  
 ---------------------------------
-# Disclaimer: we are not associated or affiliated in any way to NetMeds, but feel the features they provide would be essential/ideal if we had the time to implement the same.
+Disclaimer: we are not associated or affiliated in any way to NetMeds, but feel the features they provide would be essential/ideal if we had the time to implement the same.
+
 ---------------------------------
 Webpage: https://swasthya-88454.firebaseapp.com
 Project APK: https://firebasestorage.googleapis.com/v0/b/swasthya-88454.appspot.com/o/Swasthya.apk?alt=media&token=fdc5eb24-79cc-4978-a086-7ba1f5bd8996
