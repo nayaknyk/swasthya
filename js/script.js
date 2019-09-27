@@ -36,7 +36,7 @@ function loginAccount(){
   var data = {
   email    : $('#loginEmail').val(),
   password : $('#loginPassword').val(),
-  username : "nyke55"
+  username : $('#loginUsername').val()
 };
 
 var auth = null;
