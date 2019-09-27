@@ -23,7 +23,7 @@ firebase
   .then(function(){
     alert("User account created!Add your info");
     sessionStorage.setItem("user", data.username);
-    window.location.replace("signin2.html")
+    window.location.replace("signin2.html");
   })
   .catch(function(error){
     alert("Error creating user:", error);
@@ -43,9 +43,16 @@ var auth = null;
 firebase
   .auth()
   .signInWithEmailAndPassword(data.email, data.password)
-  .then( function(user){
+  .then(function(user){
     console.log("Authenticated successfully with payload:", user);
-    auth = user;
+    var db = firebase.firestore();
+    db.collections("user").get().then(function(docs){
+        docs.forEach(function(doc){
+            if(doc.id == data.user)
+                auth = user;
+        });
+    })
+    
     firebase.auth().onAuthStateChanged(user => {
         if(auth){
             window.location.replace("home.html");
@@ -54,7 +61,7 @@ firebase
     })
   })
   .catch(function(error){
-    window.alert("Login Failed!", error);
+    window.alert("Login Failed!Try Again", error);
   });
     return false;
 }
@@ -63,15 +70,15 @@ firebase
 function addDetails(){
     var db = firebase.firestore();
     var user_ref = db.collection("user");
-        
+    
     var userdata = {
         name : $('#name').val(),
         dob : $('#dob').val(),
         btype : $('#btype').val()
     }
     console.log(userdata);
-    var i = (Math.random()*1000).toString();
-    user_ref.doc("user"+i).set(userdata).then(function(){
+    var user = sessionStorage.getItem("user");
+    user_ref.doc(user).set(userdata).then(function(){
         window.alert("User details Added"),
         window.location.replace("home.html");
     }).catch(function(error){
@@ -82,18 +89,34 @@ function addDetails(){
 
 //populate fields
 var db = firebase.firestore();
-var user_ref = db.collection("user").doc("001");
-user_ref.get().then(function(doc){
-if((doc.exists)){
-        var user = doc.data();
-        document.getElementById("lname").innerHTML = "Name: "+user.name;
-        document.getElementById("ldob").innerHTML = "DOB: "+user.dob;
-        document.getElementById("lbtype").innerHTML = "Blood Type: "+user.btype;
-    }else{window.alert("User not Found");}
+var user_ref = db.collection("user");
+var username = sessionStorage.getItem("user");
+
+user_ref.get().then(function(docs){
+    docs.forEach(function(doc){
+        if(doc.id == username){
+            var user = doc.data();
+            document.getElementById("lname").innerHTML = "Name: "+user.name;
+            document.getElementById("ldob").innerHTML = "DOB: "+user.dob;
+            document.getElementById("lbtype").innerHTML = "Blood Type: "+user.btype;
+    }else{
+        window.alert("User not Found");
+    }    
+  });
 });
+
 //populate table
 if(document.title == "Swasthya | Patient History"){
-var patient_ref = db.collection("user").doc("001").collection("patient history");
+    var patient_ref = "";
+    user_ref.get().then(function(docs){
+    docs.forEach(function(doc){
+        if(doc.id == username){
+            patient_ref = doc.collection("patient history");
+        }
+    });
+    });
+    
+
     patient_ref.get().then(function(obj){
         obj.forEach(function(doc){
             var medhistory = doc.data();
@@ -134,6 +157,7 @@ var patient_ref = db.collection("user").doc("001").collection("patient history")
         window.alert(error.toString());
     });
 }
+
 //add medical history
 function addRecords(){
     var data = {
@@ -146,11 +170,21 @@ function addRecords(){
     }
     var db = firebase.firestore();
     var i = (Math.random()*1000).toString();
-    db.collection("user").doc("001").collection("patient history").doc('abc'+i).set(data).then(function(){
+    
+    var patient_ref = "";
+    user_ref.get().then(function(docs){
+    docs.forEach(function(doc){
+        if(doc.id == username){
+            patient_ref = doc.collection("patient history");
+        }
+    });
+    });
+    
+    patient_ref.doc('abc'+i).set(data).then(function(){
       window.alert("Record Added");
       location.reload();
     }).catch(function(error){
         window.alert(error.toString);
     });
     return false;
-}
+}[]
