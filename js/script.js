@@ -36,7 +36,7 @@ function loginAccount(){
   var data = {
   email    : $('#loginEmail').val(),
   password : $('#loginPassword').val(),
-  username : $('#loginUsername').val()
+  username : "nyke55"
 };
 
 var auth = null;
@@ -45,16 +45,17 @@ firebase
   .signInWithEmailAndPassword(data.email, data.password)
   .then( function(user){
     console.log("Authenticated successfully with payload:", user);
- firebase.firestore().collection('user').doc(data.username).get().then(function(doc){
-     if(doc.exists)
-            auth = user;
-    });
-    firebase.auth().onAuthStateChanged(user => {
-        if(auth){
-            window.location.replace("home.html");
+    auth = user;
+    firebase.auth().onAuthStateChanged(function(user){
+        if(auth){ firebase.firestore().collection('user').doc(data.username).get().then(function(doc){
+                if(doc.exists){
+                    document.cookie = "user="+data.username;
+                    window.location.replace("home.html");
+                    }
+            })
+            
         }
-        else{ console.log("error");}
-    })
+    });
   })
   .catch(function(error){
     window.alert("Login Failed!", error);

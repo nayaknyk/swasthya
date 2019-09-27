@@ -8,17 +8,28 @@ function run() {
     today = mm + '/' + dd + '/' + yyyy;
     console.log(today);
     console.log(mm);
-    if(document.title == "Swasthya | Patient History" )
-    {
-        console.log("db");
-        var db = firebase.firestore().collection('user');
-        console.log("coll");
-        db.get().then(function(users){
-            users.forEach(function(ids){
-                console.log("user thanid");
-                ids.collection('patient history').get().then(function(records){
-                    records.forEach(function(conditions){
-                        mmd=String((conditions.start_date));
+
+        var user_ref = firebase.firestore().collection('user');
+        user_ref.get().then(function(users){
+            users.forEach(function(userdocs){
+                var id = userdocs.id;
+                user_ref.doc(id).collection('patient history').get().then(function(records){
+                    records.forEach(function(doc){
+                        var condition = doc.data();
+                        console.log(condition);
+                        
+                    })
+                })
+            })
+        }).catch(function(err){
+            console.log(err);
+        });
+
+}
+                      
+                      
+                    /*{
+                       mmd=String((conditions.start_date));
                         if((mmd == mm) || (mmd+1 == mm)){//date difference
                             if(data.includes(conditions.data())){
                                 data[data.indexOf(conditions.data())]
@@ -29,14 +40,4 @@ function run() {
                                 console.log(data);
                             }
                         }
-                    });
-                });
-            });
-        }).catch(function(err){
-            console.log(err);
-        });
-    }
-    else{
-        console.log("db not found");
-    }
-}
+                    } */
