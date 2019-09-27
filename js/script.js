@@ -23,6 +23,7 @@ firebase
   .then(function(){
     alert("User account created!Add your info");
     sessionStorage.setItem("user", data.username);
+    console.log(sessionStorage.getItem("user"));
     window.location.replace("signin2.html");
   })
   .catch(function(error){
@@ -92,32 +93,21 @@ var db = firebase.firestore();
 var user_ref = db.collection("user");
 var username = sessionStorage.getItem("user");
 
-user_ref.get().then(function(docs){
+//populate table and fields
+if(document.title == "Swasthya | Patient History"){
+    var patient_ref = "";
+    var flag = 0;
+    user_ref.get().then(function(docs){
     docs.forEach(function(doc){
         if(doc.id == username){
+            flag = 1;
             var user = doc.data();
             document.getElementById("lname").innerHTML = "Name: "+user.name;
             document.getElementById("ldob").innerHTML = "DOB: "+user.dob;
             document.getElementById("lbtype").innerHTML = "Blood Type: "+user.btype;
-    }else{
-        window.alert("User not Found");
-    }    
-  });
-});
-
-//populate table
-if(document.title == "Swasthya | Patient History"){
-    var patient_ref = "";
-    user_ref.get().then(function(docs){
-    docs.forEach(function(doc){
-        if(doc.id == username){
-            patient_ref = doc.collection("patient history");
-        }
-    });
-    });
-    
-
-    patient_ref.get().then(function(obj){
+            
+            patient_ref = doc.collection("patient history").add();
+            patient_ref.get().then(function(obj){
         obj.forEach(function(doc){
             var medhistory = doc.data();
             var rownode = document.createElement("TR");
@@ -156,6 +146,14 @@ if(document.title == "Swasthya | Patient History"){
     }).catch(function(error){
         window.alert(error.toString());
     });
+        }    
+  });
+  if(flag == 0){
+      window.alert("User not found.");
+  }
+});
+    
+
 }
 
 //add medical history
@@ -171,20 +169,17 @@ function addRecords(){
     var db = firebase.firestore();
     var i = (Math.random()*1000).toString();
     
-    var patient_ref = "";
     user_ref.get().then(function(docs){
     docs.forEach(function(doc){
         if(doc.id == username){
-            patient_ref = doc.collection("patient history");
+            doc.collection("patient history").doc('condition'+i).add(data).then(function(){
+                window.alert("Record Added");
+                location.reload();
+                }).catch(function(error){
+                    window.alert(error.toString);
+                });
         }
     });
     });
-    
-    patient_ref.doc('abc'+i).set(data).then(function(){
-      window.alert("Record Added");
-      location.reload();
-    }).catch(function(error){
-        window.alert(error.toString);
-    });
     return false;
-}[]
+}
