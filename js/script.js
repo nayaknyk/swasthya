@@ -13,7 +13,8 @@
 function createAccount(){
   var data = {
   email: $('#registerEmail').val(),
-  password : $('#registerPassword').val()
+  password : $('#registerPassword').val(),
+  username : $("#registerUsername").val()
 };
 
 firebase
@@ -21,6 +22,7 @@ firebase
   .createUserWithEmailAndPassword(data.email, data.password)
   .then(function(){
     alert("User account created!Add your info");
+    sessionStorage.setItem("user", data.username);
     window.location.replace("signin2.html")
   })
   .catch(function(error){
@@ -33,7 +35,8 @@ firebase
 function loginAccount(){
   var data = {
   email    : $('#loginEmail').val(),
-  password : $('#loginPassword').val()
+  password : $('#loginPassword').val(),
+  username : $("#loginUsername").val()
 };
 
 var auth = null;
@@ -46,6 +49,7 @@ firebase
     firebase.auth().onAuthStateChanged(user => {
         if(auth){
             window.location.replace("home.html");
+            sessionStorage.setItem("user", data.username);
         }
     })
   })
@@ -58,7 +62,7 @@ firebase
 //add details
 function addDetails(){
     var db = firebase.firestore();
-    var user_ref = db.collection("user").doc("001");
+    var user_ref = db.collection("user");
         
     var userdata = {
         name : $('#name').val(),
@@ -66,7 +70,8 @@ function addDetails(){
         btype : $('#btype').val()
     }
     console.log(userdata);
-    user_ref.set(userdata).then(function(){
+    var i = (Math.random()*1000).toString();
+    user_ref.doc("user"+i).set(userdata).then(function(){
         window.alert("User details Added"),
         window.location.replace("home.html");
     }).catch(function(error){
@@ -74,6 +79,7 @@ function addDetails(){
     });
     return false;
 }
+
 //populate fields
 var db = firebase.firestore();
 var user_ref = db.collection("user").doc("001");
