@@ -155,14 +155,18 @@ if(document.title == "Swasthya | Patient History"){
 
 //add medical history
 function addRecords(){
+    getLoc();
     var data = {
         cond : $('#cond').val(),
         start_date : $('#de').val(),
         end_date : $('#ds').val(),
         med : $('#med').val(),
-        phy : $('#phy').val()
-        
+        phy : $('#phy').val(),
+        lat : getCookieValue('lat'),
+        lng : getCookieValue('lng')
     }
+    document.cookie = "lat= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "lng= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     var db = firebase.firestore();
     var i = (Math.random()*1000).toString();
     
@@ -179,4 +183,20 @@ function addRecords(){
     });
     });
     return false;
+}
+
+//logout
+function logout(){
+    firebase.auth().signOut().then(function(){
+        document.cookie = "user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"; //del cookie as well as auth
+    }).catch(function(err){
+        console.log(err);
+    })
+}
+//location
+function getLoc(){
+    navigator.geolocation.getCurrentPosition(function(position){
+        document.cookie = "lat" + position.lat;
+        document.cookie = "lng" + position.lng;
+    })
 }
