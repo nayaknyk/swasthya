@@ -41,30 +41,20 @@ function loginAccount(){
 };
 
 var auth = null;
-firebase
-  .auth()
-  .signInWithEmailAndPassword(data.email, data.password)
-  .then(function(user){
+firebase.auth().signInWithEmailAndPassword(data.email, data.password).then(function(user){
     console.log("Authenticated successfully with payload:", user);
-    var db = firebase.firestore();
-    db.collections("user").get().then(function(docs){
-        docs.forEach(function(doc){
-            if(doc.id == data.user)
-                auth = user;
-        });
-    })
     
-    firebase.auth().onAuthStateChanged(user => {
-        if(auth){
+    firebase.firestore().collection('user').doc(data.username).get().then(function(doc){
+        if(doc.exists)
+        {
+            auth = user;
+            console.log(user);
             window.location.replace("home.html");
             sessionStorage.setItem("user", data.username);
         }
-    })
-  })
-  .catch(function(error){
-    window.alert("Login Failed!Try Again", error);
-  });
-    return false;
+        });
+    });
+    
 }
 
 //add details
