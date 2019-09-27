@@ -95,7 +95,6 @@ var username = sessionStorage.getItem("user");
 
 //populate table and fields
 if(document.title == "Swasthya | Patient History"){
-    var patient_ref = "";
     var flag = 0;
     user_ref.get().then(function(docs){
     docs.forEach(function(doc){
@@ -106,8 +105,7 @@ if(document.title == "Swasthya | Patient History"){
             document.getElementById("ldob").innerHTML = "DOB: "+user.dob;
             document.getElementById("lbtype").innerHTML = "Blood Type: "+user.btype;
             
-            patient_ref = doc.collection("patient history").add();
-            patient_ref.get().then(function(obj){
+            user_ref.doc(username).collection('patient history').get().then(function(obj){
         obj.forEach(function(doc){
             var medhistory = doc.data();
             var rownode = document.createElement("TR");
@@ -172,7 +170,7 @@ function addRecords(){
     user_ref.get().then(function(docs){
     docs.forEach(function(doc){
         if(doc.id == username){
-            doc.collection("patient history").doc('condition'+i).add(data).then(function(){
+            firebase.firestore().collection('user').doc(username).collection("patient history").doc('condition'+i).set(data).then(function(){
                 window.alert("Record Added");
                 location.reload();
                 }).catch(function(error){
