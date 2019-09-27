@@ -22,7 +22,7 @@ firebase
   .createUserWithEmailAndPassword(data.email, data.password)
   .then(function(){
     alert("User account created!Add your info");
-    sessionStorage.setItem("user", data.username);
+    document.cookie = "user="+data.username;
     console.log(sessionStorage.getItem("user"));
     window.location.replace("signin2.html");
   })
@@ -50,7 +50,7 @@ firebase.auth().signInWithEmailAndPassword(data.email, data.password).then(funct
             auth = user;
             console.log(user);
             window.location.replace("home.html");
-            sessionStorage.setItem("user", data.username);
+            document.cookie = "user="+data.username;
         }
         });
     });
@@ -78,10 +78,15 @@ function addDetails(){
     return false;
 }
 
+function getCookieValue(a) {
+    var b = document.cookie.match('(^|[^;]+)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+}
+
 //populate fields
 var db = firebase.firestore();
 var user_ref = db.collection("user");
-var username = sessionStorage.getItem("user");
+var username = getCookieValue("user");
 
 //populate table and fields
 if(document.title == "Swasthya | Patient History"){
@@ -140,8 +145,6 @@ if(document.title == "Swasthya | Patient History"){
       window.alert("User not found.");
   }
 });
-    
-
 }
 
 //add medical history
