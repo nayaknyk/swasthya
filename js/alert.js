@@ -1,5 +1,10 @@
 function run() {
-    var data = "";
+    var data = [
+        { 
+            "condition": "",
+            "count": "",
+        }
+    ];
     var today = new Date();
     console.log(today);
     var dd = String(today.getDate()).padStart(2, '0');
@@ -16,7 +21,31 @@ function run() {
                 user_ref.doc(id).collection('patient history').get().then(function(records){
                     records.forEach(function(doc){
                         var condition = doc.data();
-                        console.log(condition);
+                        var mmd= String(condition.start_date).split('-');
+                        
+                        if((mmd[1] == mm) || (mmd[1]+1 == mm)){//date difference
+                            var found = false;
+                            for(var i = 0; i < data.length; i++) {
+                                if (data[i].condition == condition.cond) {
+                                    found = true;
+                                    var index= i;
+                                    break;
+                                }
+                            }
+                            console.log(found);
+                            if(found){
+                                console.log(data[index].count);
+                                var count=data[index].count+1;
+                                data[index].count=count;
+                                console.log(data);
+                            }
+                            else{
+                                var count=1;
+                                data.push({"condition": condition.cond, "count": count});
+                                console.log(data);
+                            }
+                        }
+                        
                         
                     })
                 })
@@ -28,16 +57,4 @@ function run() {
 }
                       
                       
-                    /*{
-                       mmd=String((conditions.start_date));
-                        if((mmd == mm) || (mmd+1 == mm)){//date difference
-                            if(data.includes(conditions.data())){
-                                data[data.indexOf(conditions.data())]
-                            }
-                            else{
-                                var count=1;
-                                data.push([conditions.data(),count]);
-                                console.log(data);
-                            }
-                        }
-                    } */
+                    
