@@ -40,8 +40,8 @@ form{
     <form class="form-signin" onsubmit="return addDetails()">
         <h2>Enter Your Details</h2>
   <input type="text" id="name" class="form-control" placeholder="Full Name" required autofocus>
-  <input type="date" id="dob" class="form-control" placeholder="Date of Birth" required style="margin-top: 10px;">
-  <input type="text" id="btype" class="form-control" placeholder="Blood type" required autofocus style="margin-top: 10px;">
+  <input type="text" id="dob" class="form-control" onfocus="(this.type='date')" placeholder="Date of Birth" required >
+  <input type="text" id="btype" class="form-control" placeholder="Blood type" required >
   <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Add Details" style="margin-top: 10px;"><br>
     </form>
 
