@@ -23,7 +23,6 @@ firebase
   .then(function(){
     alert("User account created!Add your info");
     document.cookie = "user="+data.username;
-    console.log(sessionStorage.getItem("user"));
     window.location.replace("signin2.html");
   })
   .catch(function(error){
@@ -37,24 +36,30 @@ function loginAccount(){
   var data = {
   email    : $('#loginEmail').val(),
   password : $('#loginPassword').val(),
-  username : $("#loginUsername").val()
+  username : $('#loginUsername').val()
 };
 
 var auth = null;
-firebase.auth().signInWithEmailAndPassword(data.email, data.password).then(function(user){
+firebase
+  .auth()
+  .signInWithEmailAndPassword(data.email, data.password)
+  .then( function(user){
     console.log("Authenticated successfully with payload:", user);
-    
-    firebase.firestore().collection('user').doc(data.username).get().then(function(doc){
-        if(doc.exists)
-        {
+ firebase.firestore().collection('user').doc(data.username).get().then(function(doc){
+     if(doc.exists)
             auth = user;
-            console.log(user);
-            window.location.replace("home.html");
-            document.cookie = "user="+data.username;
-        }
-        });
     });
-    
+    firebase.auth().onAuthStateChanged(user => {
+        if(auth){
+            window.location.replace("home.html");
+        }
+        else{ console.log("error");}
+    })
+  })
+  .catch(function(error){
+    window.alert("Login Failed!", error);
+  });
+    return false;
 }
 
 //add details
@@ -68,7 +73,7 @@ function addDetails(){
         btype : $('#btype').val()
     }
     console.log(userdata);
-    var user = sessionStorage.getItem("user");
+    var user = getCookieValue("user");
     user_ref.doc(user).set(userdata).then(function(){
         window.alert("User details Added"),
         window.location.replace("home.html");
