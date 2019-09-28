@@ -23,6 +23,7 @@
             <a href="http://swasthya.rf.gd/SampleAvatar/?i=1">Symptom Checker</a>
             <a href="https://www.netmeds.com/">NetMeds™</a>
             <a href="https://www.google.com/maps/search/?api=1&query=hospital|pharmacy">Near Me</a>
+            <a href="testleflet.html">Map</a>
             <a href="index.html">Logout</a>
     </nav>
       </div>
@@ -30,8 +31,35 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
-        <script src="js/alert.js"></script>
-        <script src="js/script.js"></script>
-        <button onclick="run()">click</button> 
+    <script src="js/script.js"></script>
+    <script src="js/alert.js"></script>
+        
+    <div class="alert alert-warning" role="alert" style="margin-top: 1%; margin-left: 10%; margin-right:10%;">
+            <h3>Desclaimer</h3><br>
+            <p>
+                The Records shown below are possible epidemics located in the given area and this is a request for verification.
+                Please verify with caution as it may result in sending false news about epidemics to public.
+                The list shown to you are possible ongoing epidemics where more than 20 cases are found in a locality.
+            </p>
+
+    </div>
+    <br>
+
+    <div id="possibleepidemic" class="card" style="padding-bottom: 10px;margin-top: 1%;margin-left: 30%; position: absolute;margin-right:10%;">
+            <h5 class="card-header">Epidemics</h5>
+            <table class="table table-hover">
+            <thead>
+                <tr>
+                <th>Condition/Diagnosis</th>
+                <th>Count</th>
+                <th>Location</th>
+                <th>Verify</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                
+            </tbody>
+        </table>    
+      </div>
     </body>
 </html>
