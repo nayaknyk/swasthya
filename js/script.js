@@ -162,11 +162,9 @@ function addRecords(){
         end_date : $('#ds').val(),
         med : $('#med').val(),
         phy : $('#phy').val(),
-        lat : getCookieValue('lat'),
-        lng : getCookieValue('lng')
+        location : "15.582511, 73.743267"
+
     }
-    document.cookie = "lat= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = "lng= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     var db = firebase.firestore();
     var i = (Math.random()*1000).toString();
     
@@ -194,9 +192,3 @@ function logout(){
     })
 }
 //location
-function getLoc(){
-    navigator.geolocation.getCurrentPosition(function(position){
-        document.cookie = "lat" + position.lat;
-        document.cookie = "lng" + position.lng;
-    })
-}
