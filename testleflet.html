@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <script src="dist\html2pdf.bundle.min.js"></script>
+
+    <title>Swasthya | epidemic</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/pricing.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+ integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+ crossorigin=""></script>
+ <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+   
+ <script src="js/cluster.js"></script>
+ <style>
+     #mapid { height: 600px; }
+ 
+ </style>
+  </head>
+  <body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" style=" width: 100%;">
+        <nav class="my-2 my-md-0 mr-md-3">
+          <a href="home.html">Home</a>
+          <a href="http://swasthya.rf.gd/SampleAvatar/?i=1">Symptom Checker</a>
+          <a href="https://www.netmeds.com/">NetMeds™</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=hospital|pharmacy">Near Me</a>
+          <a href="index.html">Logout</a>
+  </nav>
+    </div>
+    <div id="mapid">
+<script>
+    var mymap = L.map('mapid').setView([15.500, 73.9], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom:10,
+	id: 'mapbox.streets',
+	accessToken: 'pk.eyJ1IjoieGF2aWNlIiwiYSI6ImNrMTM0NTFnZDA1MzEzaXFqM3VkNGI3cHcifQ.0jABNAzZUgqpKVCrZRdWOg'
+}).addTo(mymap);
+var coor=retdata();
+console.log(coor);
+var polygon = L.polygon([
+	[15.490544, 73.974653],
+	[15.588459, 73.924661],
+	[15.688500, 73.944700]
+],{
+	color: 'red',
+	fillColor: '#f03',
+	fillOpacity: 0.5,
+}).addTo(mymap);
+
+    </script>
+
+    </div>
+
+
+
+
+
+
+</body>
+</html>
