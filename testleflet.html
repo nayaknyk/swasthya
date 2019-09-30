@@ -83,11 +83,10 @@ hexLayer.colorScale().range(['red', 'red']);
 
 // Set the data (can be set multiple times)
 //long lat
-hexLayer.data([[ 73.974653,15.490544],
-	[ 73.924661,15.588459],
-	[ 73.944700,15.688500]
-]);
-
+function datacallback(){
+console.log(latlong.location);
+hexLayer.data(arr);
+}
     </script>
 
     </div>

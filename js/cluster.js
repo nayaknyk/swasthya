@@ -10,19 +10,19 @@ appId: "1:374829257847:web:12e1bb9b95415a8f00a272"
 
 
 firebase.initializeApp(config);
+
 var latlong;
+var arr=[];
 var db = firebase.firestore();
-var loc = db.collection("location");
-console.log(loc);
+var loc = db.collection("doctor");
+
 loc.get().then(function(docs){
 docs.forEach(function(doc){
    latlong=doc.data();
-console.log(latlong.latlng);
 
+arr.push([latlong.location._lat,latlong.location._long]);
+//console.log(arr);
+datacallback();
 })
 
 })
-function retdata(){
-  
-  return latlong;
-}
