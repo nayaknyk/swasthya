@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Swasthya || Login</title>
+    <!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center bg">
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/swasthya-88454.appspot.com/o/patient-healthcare-access-header.png?alt=media&token=ae7650a0-8eab-4e93-b167-ad62d1971118");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+form{
+    border-style:solid;
+    border-radius: 15px;
+    border-color:dimgray;
+    background-color: white;
+}
+</style>  <form class="form-signin" onsubmit="return loginAccount()">
+  <h1 class="h3 mb-3 font-weight-normal"><img src="https://firebasestorage.googleapis.com/v0/b/swasthya-88454.appspot.com/o/%E2%80%94Pngtree%E2%80%94heart%20care%20icon%20with%20a_3670172.png?alt=media&token=de40e57f-4e63-4407-8b82-34aa7057545c" style=" height: 100px;">Swasthya</h1>
+  
+  <input type="email" id="loginEmail" class="form-control" placeholder="Email address" required autofocus>
+  <input type="text" id="loginUsername" class="form-control" placeholder="Username" required autofocus>
+  <input type="password" id="loginPassword" class="form-control" placeholder="Password" required style="margin-top: 10px;">
+  <button class="btn btn-lg btn-secondary btn-block" type="submit">Log in</button><br>
+  <a href="signin.html">Create Account Now</a>
+  <p class="mt-5 mb-3 text-muted">&copy;CodeMeisters 2019</p>
+</form>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
