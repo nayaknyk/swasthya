@@ -41,30 +41,39 @@ user_ref.get().then(function(users){
                             data[index].location=condition.location;
                             if(count>2){
                                 var rownode = document.createElement("TR");
+                                //condition
                                 var dnode1 = document.createElement("TD"); 
                                 var d1 = document.createTextNode(data[index].condition);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
-                                document.getElementById("tbody").appendChild(rownode);
-                                //start date
+                                
+                                //count
                                 dnode1 = document.createElement("TD"); 
                                 d1 = document.createTextNode(data[index].count);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
-                                document.getElementById("tbody").appendChild(rownode);
-                                //medication
+                                
+                                //location
                                 dnode1 = document.createElement("TD"); 
                                 d1 = document.createTextNode(data[index].location);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
-                                document.getElementById("tbody").appendChild(rownode)
+                               
+                                //button
                                 dnode1 = document.createElement("TD"); 
-                                var r = $('<input/>').attr({
-                                    type: "button",
-                                    id: "varification",
-                                    value: 'Confirm'
-                                });
-                                document.getElementById("tbody").appendChild(r);
+                                var node = document.createElement("BUTTON");
+                                var attr = document.createAttribute("class");
+                                attr.value = "btn btn-outline-danger";
+                                node.setAttributeNode(attr);
+                                attr = document.createAttribute("onclick");
+                                attr.value = "window.confirm('Are you certain that an epidemic is occuring?');";
+                                node.setAttributeNode(attr);
+                                attr = document.createTextNode("Verify");
+                                node.appendChild(attr);
+                                dnode1.appendChild(node);
+                                rownode.appendChild(dnode1);
+                                //add all to row
+                                document.getElementById('tbody').appendChild(rownode);
                             }
                             console.log(data);
                         }
