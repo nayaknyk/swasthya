@@ -155,7 +155,6 @@ if(document.title == "Swasthya | Patient History"){
 
 //add medical history
 function addRecords(){
-    getLoc();
     var data = {
         cond : $('#cond').val(),
         start_date : $('#de').val(),
