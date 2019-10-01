@@ -20,7 +20,9 @@
   </head>
 <body >
   
-  <button id="geolocation-button" onclick="geolocate()">location</button>
+  <button id="geolocation-button" onclick="geolocate()">location</button><br>
+  <input type="text" id="l1" placeholder="Lat"><br>
+  <input type="text" id="l2" placeholder="lng">
   <script>
       const $geolocateButton = document.getElementById('geolocation-button');
       $geolocateButton.addEventListener('click', geolocate);
@@ -34,6 +36,8 @@
   function onGeolocateSuccess(coordinates) {
     const { latitude, longitude } = coordinates.coords;
     console.log('Found coordinates: ', latitude, longitude);
+    document.getElementById('l1').value = coordinates.coords.latitude;
+    document.getElementById('l2').value = coordinates.coords.longitude;
   }
   
   function onGeolocateError(error) {

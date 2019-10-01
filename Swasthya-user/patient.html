@@ -98,6 +98,11 @@
                   <input type="text" class="form-control" id="phy" placeholder="Prescribing Physician">
               </div>
           </div>
+          <div class="form-row">
+              <button id="geolocation-button" onclick="geolocate()">location</button><br>
+  <input type="text" id="l1" placeholder="Lat"><br>
+  <input type="text" id="l2" placeholder="lng">
+          </div>
           <button class="btn btn-primary col-md-2" onclick="return addRecords()">Add Record</button>
           <br>
       </form>
@@ -115,14 +120,43 @@
     <script src="js/vendor/holder.min.js"></script>
     <script src="js/script.js"></script>
     <script>
+      const $geolocateButton = document.getElementById('geolocation-button');
+      $geolocateButton.addEventListener('click', geolocate);
+      var loc;
+      function geolocate() {
+    if (window.navigator && window.navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(onGeolocateSuccess, onGeolocateError);
+      
+    }
+  }
+  function onGeolocateSuccess(coordinates) {
+    const { latitude, longitude } = coordinates.coords;
+    console.log('Found coordinates: ', latitude, longitude);
+    document.getElementById('l1').value = coordinates.coords.latitude;
+    document.getElementById('l2').value = coordinates.coords.longitude;
+  }
+  
+  function onGeolocateError(error) {
+    console.warn(error.code, error.message);
+   
+    if (error.code === 1) {
+      console.log("no");
+
+    } else if (error.code === 2) {
+      console.log("unavailable");
+
+    } else if (error.code === 3) {
+      console.log("timeout");
+
+    }
+  }
+    </script>
+    <script>
       Holder.addTheme('thumb', {
         bg: '#55595c',
         fg: '#eceeef',
         text: 'Thumbnail'
       });
-    </script>
-      <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBB8VvYkbbulpaTeEQHCXcwvLz56oWKIM">
     </script>
   </body>
 </html>
