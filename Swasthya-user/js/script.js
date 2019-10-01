@@ -73,7 +73,7 @@ function addDetails(){
         dob : $('#dob').val(),
         btype : $('#btype').val()
     }
-    console.log(userdata);
+
     var user = getCookieValue("user");
     user_ref.doc(user).set(userdata).then(function(){
         window.alert("User details Added"),
