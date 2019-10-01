@@ -96,13 +96,19 @@
           <div class="form-row">
               <div class="form-group col-md-7">
                   <input type="text" class="form-control" id="phy" placeholder="Prescribing Physician">
+                  <br>
               </div>
           </div>
           <div class="form-row">
-              <button id="geolocation-button" onclick="geolocate()">location</button><br>
-  <input type="text" id="l1" placeholder="Lat"><br>
-  <input type="text" id="l2" placeholder="lng">
+              <div class="form-group col-md-7">
+                <h6>Location Data</h6>
+                <span class="col-md-auto">
+                <input type="text" class="form-control" id="l1" placeholder="Lat" required></span>
+                <span class="col-md-auto">
+                <input type="text" class="form-control" id="l2" placeholder="lng" required></span>
           </div>
+          </div>
+          <button type="button" class="btn btn-outline-secondary" id="geolocation-button" onclick="geolocate()" style="margin: 10px;">Get location</button>
           <button class="btn btn-primary col-md-2" onclick="return addRecords()">Add Record</button>
           <br>
       </form>
@@ -118,7 +124,6 @@
     <script src="js/vendor/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/vendor/holder.min.js"></script>
-    <script src="js/script.js"></script>
     <script>
       const $geolocateButton = document.getElementById('geolocation-button');
       $geolocateButton.addEventListener('click', geolocate);
@@ -158,5 +163,6 @@
         text: 'Thumbnail'
       });
     </script>
+      <script src="js/script.js"></script>
   </body>
 </html>

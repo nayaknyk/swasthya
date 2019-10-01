@@ -68,23 +68,11 @@ user_ref.get().then(function(users){
                                 d1 = document.createTextNode(data[index].location);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
-                                
-                                //view location
-                                dnode1 = document.createElement("TD");
-                                d1 = document.createElement("A");
-                                var attr = document.createAttribute("href");
-                                attr.value = "https://www.google.com/maps/place/"+data[index].location;
-                                d1.setAttributeNode(attr);
-                                dnode1.appendChild(d1);
-                                var d2 = document.createTextNode("View in Map");
-                                d1.appendChild(d2);
-                                dnode1.appendChild(d1);
-                                rownode.appendChild(dnode1);
-                                
+                               
                                 //button
                                 dnode1 = document.createElement("TD"); 
                                 var node = document.createElement("BUTTON");
-                                attr = document.createAttribute("class");
+                                var attr = document.createAttribute("class");
                                 attr.value = "btn btn-outline-danger";
                                 node.setAttributeNode(attr);
                                 attr = document.createAttribute("onclick");

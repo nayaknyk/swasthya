@@ -155,13 +155,15 @@ if(document.title == "Swasthya | Patient History"){
 
 //add medical history
 function addRecords(){
+    var latitude = $('#l1').val();
+    var longitude = $("#l2").val();
     var data = {
         cond : $('#cond').val(),
         start_date : $('#de').val(),
         end_date : $('#ds').val(),
         med : $('#med').val(),
         phy : $('#phy').val(),
-        location : "15.582511, 73.743267"
+        location: new firebase.firestore.GeoPoint(parseFloat(latitude), parseFloat(longitude))
 
     }
     var db = firebase.firestore();
