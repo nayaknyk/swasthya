@@ -28,7 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.js"></script>
     <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
     <script src="https://unpkg.com/@asymmetrik/leaflet-d3@4/dist/leaflet-d3.js" charset="utf-8"></script>
- <script src="js/cluster.js"></script>
+
  <style>
      #mapid { height: 600px; }
      .hexbin-hexagon {
@@ -80,14 +80,31 @@ var hexLayer = L.hexbinLayer(options).addTo(map);
 
 // Optionally, access the d3 color scale directly
 // Can also set scale via hexLayer.colorScale(d3.scale.linear()...)
-hexLayer.colorScale().range(['red', 'red']);
+hexLayer.colorScale().range(['red', '#8b0000']);
 
+var promise1=new Promise(function(resolve){
+var urlpar = new URLSearchParams(location.search);
+var dis=urlpar.get('disease');
+var locs=[];
+var arr=urlpar.getAll('location');
+for(var i=0;i<arr.length;i++){
+  var spltloc=arr[i].split(",");
+  var k=[];
+  for(var j=0;j<spltloc.length;j++)
+  k[j]=parseFloat(spltloc[j])
+ locs.push(k);
+
+}
+resolve(locs);
+});
 // Set the data (can be set multiple times)
 //long lat
-function datacallback(){
-console.log(latlong.location);
-hexLayer.data(arr);
-}
+
+
+promise1.then(function(value){
+console.log(value);
+  hexLayer.data(value)});
+
     </script>
 
     </div>

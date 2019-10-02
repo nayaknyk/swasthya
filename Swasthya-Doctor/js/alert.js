@@ -10,7 +10,7 @@
   firebase.initializeApp(config);
 
 var data = [
-{ 
+{
     "condition": "",
     "count": "",
     "location": [],
@@ -50,17 +50,17 @@ user_ref.get().then(function(users){
                             if(count>2){
                                 var rownode = document.createElement("TR");
                                 //condition
-                                var dnode1 = document.createElement("TD"); 
+                                var dnode1 = document.createElement("TD");
                                 var d1 = document.createTextNode(data[index].condition);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
-                                
+
                                 //count
-                                dnode1 = document.createElement("TD"); 
+                                dnode1 = document.createElement("TD");
                                 d1 = document.createTextNode(data[index].count);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
-                               
+
                                 //view location
                                 dnode1 = document.createElement("TD");
                                 d1 = document.createElement("A");
@@ -74,7 +74,7 @@ user_ref.get().then(function(users){
                                 rownode.appendChild(dnode1);
 
                                 //button
-                                dnode1 = document.createElement("TD"); 
+                                dnode1 = document.createElement("TD");
                                 var node = document.createElement("BUTTON");
                                 var attr = document.createAttribute("class");
                                 attr.value = "btn btn-outline-danger";
@@ -108,11 +108,11 @@ user_ref.get().then(function(users){
 function addAlert(data){
     var doc_ref = firebase.firestore().collection('doctor');
     var i = (Math.random()*1000).toString();
-    data.forEach(function(record){    
+    data.forEach(function(record){
         if(record.count>2){
             //prepare data
             var latitude = record.location[0];
-            var longitude = record.location[1]; 
+            var longitude = record.location[1];
             var rec = {
                 condition : record.condition,
                 count : record.count,
@@ -127,11 +127,11 @@ function addAlert(data){
             }).catch(function(err){
                 console.log(err);
             })
-                
+
         }
     })
-}                      
-                      
+}
+
 function createMapURL(record){
     var disease = record.condition;
     var locations = record.location;
@@ -139,9 +139,9 @@ function createMapURL(record){
     locations.forEach(function(value, index){
         var lat = value._lat.toString();
         var long = value._long.toString();
-        var locstring = lat+','+long;
-        url += '&location'+index+'='+locstring;
+        var locstring = long+','+lat;
+        url += '&location='+locstring;
     })
     console.log(url);
     return url;
-}                    
+}
