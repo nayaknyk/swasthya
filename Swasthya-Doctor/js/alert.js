@@ -49,7 +49,7 @@ user_ref.get().then(function(users){
                             //
                             //TODO: make array of locations for each disease, so all locations with 1 disease are stored
                             //
-                            data[index].location.push([condition.location.latitude, condition.location.longitude]);
+                            data[index].location.push(condition.location);
                             if(count>2){
                                 var rownode = document.createElement("TR");
                                 //condition
