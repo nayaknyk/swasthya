@@ -13,7 +13,7 @@ var data = [
 { 
     "condition": "",
     "count": "",
-    "location": "",
+    "location": [],
 }
 ];
 
@@ -46,11 +46,10 @@ user_ref.get().then(function(users){
                         if(found){
                             var count=data[index].count+1;
                             data[index].count = count;
-                            var location = [condition.location.latitude, condition.location.longitude];
                             //
                             //TODO: make array of locations for each disease, so all locations with 1 disease are stored
                             //
-                            data[index].location = location;
+                            data[index].location.push([condition.location.latitude, condition.location.longitude]);
                             if(count>2){
                                 var rownode = document.createElement("TR");
                                 //condition
@@ -62,12 +61,6 @@ user_ref.get().then(function(users){
                                 //count
                                 dnode1 = document.createElement("TD"); 
                                 d1 = document.createTextNode(data[index].count);
-                                dnode1.appendChild(d1);
-                                rownode.appendChild(dnode1);
-                                
-                                //location
-                                dnode1 = document.createElement("TD"); 
-                                d1 = document.createTextNode(data[index].location);
                                 dnode1.appendChild(d1);
                                 rownode.appendChild(dnode1);
                                
@@ -103,7 +96,7 @@ user_ref.get().then(function(users){
                         }
                         else{
                             var count=1;
-                            data.push({"condition": condition.cond, "count": count, "location":condition.location});
+                            data.push({"condition": condition.cond, "count": count, "location":[condition.location]});
                             console.log(data);
                         }
                     }
