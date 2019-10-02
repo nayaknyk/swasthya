@@ -135,11 +135,11 @@ function addAlert(data){
 function createMapURL(record){
     var disease = record.condition;
     var locations = record.location;
-    var url = 'testleflet.html?disease="'+disease+'"';
+    var url = 'testleflet.html?disease='+disease;
     locations.forEach(function(value, index){
         var lat = value._lat.toString();
         var long = value._long.toString();
-        var locstring = '"'+lat+','+long+'"';
+        var locstring = lat+','+long;
         url += '&location'+index+'='+locstring;
     })
     console.log(url);
