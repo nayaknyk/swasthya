@@ -5,7 +5,9 @@ var data = [
     "location": [],
 }
 ];
-
+var index = '';
+var rec = '';
+var cmp = ' ';
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -27,7 +29,7 @@ user_ref.get().then(function(users){
                         for(var i = 0; i < data.length; i++) {
                             if (data[i].condition == condition.cond) {
                                 found = true;
-                                var index= i;
+                                index= i;
                                 break;
                             }
                         }
@@ -68,8 +70,12 @@ user_ref.get().then(function(users){
                                 var attr = document.createAttribute("class");
                                 attr.value = "btn btn-outline-danger";
                                 node.setAttributeNode(attr);
+                                attr = document.createAttribute("id");
+                                attr.value = "btn"+index;
+                                node.setAttributeNode(attr);
                                 attr = document.createAttribute("onclick");
-                                attr.value = "return confirm('Are you sure you wish to raise an alert?')?addAlert(data):''";
+                                rec = data[index];
+                                attr.value = "return confirm('Are you sure you wish to raise an alert?')?addAlert(rec, index):''";
                                 node.setAttributeNode(attr);
                                 attr = document.createTextNode("Verify");
                                 node.appendChild(attr);
@@ -78,12 +84,10 @@ user_ref.get().then(function(users){
                                 //add all to row
                                 document.getElementById('tbody').appendChild(rownode);
                             }
-                            console.log(data);
                         }
                         else{
-                            var count=1;
+                            count=1;
                             data.push({"condition": condition.cond, "count": count, "location":[condition.location]});
-                            console.log(data);
                         }
                     }
                 }
@@ -94,38 +98,59 @@ user_ref.get().then(function(users){
     console.log(err);
 });
 
-function addAlert(data){
-    var doc_ref = firebase.firestore().collection('doctor');
+function addAlert(data, index){   //receive individual record instead of entire array
+    var doc_ref = firebase.firestore().collection('alerts');
     var i = (Math.random()*1000).toString();
-    data.forEach(function(record){
-        if(record.count>2){
-            //prepare data
-            var latitude = record.location[0];
-            var longitude = record.location[1];
-            var rec = {
-                condition : record.condition,
-                count : record.count,
-                location : new firebase.firestore.GeoPoint(parseFloat(latitude), parseFloat(longitude)),
-                verified : true
-            }
-            //
-            //TODO:check if alert has already been raised, if so, do nothing
-            //
-            doc_ref.doc('alert'+i).set(rec).then(function(){
-                window.alert('Alert has been raised!');
-            }).catch(function(err){
-                console.log(err);
-            })
-
-        }
+    var avgLocation = {
+        lat : 0,
+        long : 0,
+    }
+    var length = data.location.length;
+    data.location.forEach(function(value){
+        avgLocation.lat += value._lat;
+        avgLocation.long +=value._long;
     })
+    avgLocation.lat /= length;
+    avgLocation.long /= length;
+    //prepare data
+    var record = {
+        disease : data.condition,
+        count : data.count,
+        location : new firebase.firestore.GeoPoint(avgLocation.lat, avgLocation.long),
+        date : new firebase.firestore.Timestamp.now().toMillis()
+    }
+    //check if alert has already been raised
+    doc_ref.get().then(function(alert){
+        alert.forEach(function(entry){
+            var tmp = entry.data();
+            var currTime = new Date().getTime();
+            var dbTime = tmp.date;
+            //eliminate records later than 30 days from current date
+            if(diffdays(currTime, dbTime)<30){
+                if(tmp.disease == record.disease && tmp.location === record.location){
+                    window.alert('Alert has already been raised.');
+                    $('#btn'+index).hide();
+                    cmp = true;
+                }
+            }
+            
+        })
+    })
+    //alert does not exist, create new alert
+    if(cmp != true){
+    doc_ref.doc('alert'+i).set(record).then(function(){
+        $('#btn'+index).hide();
+    }).catch(function(err){
+        console.log(err);
+    })
+    }
 }
 
 function createMapURL(record){
     var disease = record.condition;
     var locations = record.location;
     var url = 'testleflet.html?disease='+disease;
-    locations.forEach(function(value, index){
+    locations.forEach(function(value){
         var lat = value._lat.toString();
         var long = value._long.toString();
         var locstring = long+','+lat;
@@ -133,4 +158,10 @@ function createMapURL(record){
     })
     console.log(url);
     return url;
+}
+
+function diffdays(timestamp1, timestamp2) {
+    var difference = timestamp1 - timestamp2;
+    var daysDifference = Math.floor(difference/1000/60/60/24);
+    return daysDifference;
 }

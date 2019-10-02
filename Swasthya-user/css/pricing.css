@@ -36,7 +36,7 @@ html {
 nav a{
     color: dimgrey;
     text-decoration: none;
-    padding: 5px;
+    padding: 3px;
 }
 
 a:hover{
@@ -45,7 +45,6 @@ a:hover{
     border-color: red;
     border-radius: 5px;
     text-decoration: none;
-    
 }
 
 .pricing-header{
