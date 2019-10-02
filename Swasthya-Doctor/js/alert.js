@@ -46,9 +46,6 @@ user_ref.get().then(function(users){
                         if(found){
                             var count=data[index].count+1;
                             data[index].count = count;
-                            //
-                            //TODO: make array of locations for each disease, so all locations with 1 disease are stored
-                            //
                             data[index].location.push(condition.location);
                             if(count>2){
                                 var rownode = document.createElement("TR");
@@ -68,7 +65,7 @@ user_ref.get().then(function(users){
                                 dnode1 = document.createElement("TD");
                                 d1 = document.createElement("A");
                                 var attr = document.createAttribute("href");
-                                attr.value = "https://www.google.com/maps/place/"+data[index].location;
+                                attr.value = createMapURL(data[index]);
                                 d1.setAttributeNode(attr);
                                 dnode1.appendChild(d1);
                                 var d2 = document.createTextNode("View in Map");
@@ -120,7 +117,7 @@ function addAlert(data){
                 condition : record.condition,
                 count : record.count,
                 location : new firebase.firestore.GeoPoint(parseFloat(latitude), parseFloat(longitude)),
-                verified : false
+                verified : true
             }
             //
             //TODO:check if alert has already been raised, if so, do nothing
@@ -135,4 +132,16 @@ function addAlert(data){
     })
 }                      
                       
-                    
+function createMapURL(record){
+    var disease = record.condition;
+    var locations = record.location;
+    var url = 'testleflet.html?disease="'+disease+'"';
+    locations.forEach(function(value, index){
+        var lat = value._lat.toString();
+        var long = value._long.toString();
+        var locstring = '"'+lat+','+long+'"';
+        url += '&location'+index+'='+locstring;
+    })
+    console.log(url);
+    return url;
+}                    
