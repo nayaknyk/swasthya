@@ -22,7 +22,6 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 today = mm + '/' + dd + '/' + yyyy;
-var order=0;
 
 var user_ref = firebase.firestore().collection('user');
 user_ref.get().then(function(users){
@@ -55,23 +54,9 @@ user_ref.get().then(function(users){
                                 var rownode = document.createElement("TR");
                                 //condition
                                 var dnode1 = document.createElement("TD"); 
-                                var d0 = document.createTextNode(data[index].condition);
-                                d1 = document.createElement("div");
-                                var dis = document.createAttribute("value");
-                                console.log(data[index].condition);
-                                dis.value = data[index].condition;
-                                d1.setAttributeNode(dis);
-                                var dis = document.createAttribute("id");
-                                dis.value = order;
-                                order++;
-                                d1.setAttributeNode(dis);
-                                
-
-                                
+                                var d1 = document.createTextNode(data[index].condition);
                                 dnode1.appendChild(d1);
-                                d1.appendChild(d0);
                                 rownode.appendChild(dnode1);
-                                
                                 
                                 //count
                                 dnode1 = document.createElement("TD"); 
@@ -106,8 +91,6 @@ user_ref.get().then(function(users){
                                 rownode.appendChild(dnode1);
                                 //add all to row
                                 document.getElementById('tbody').appendChild(rownode);
-                                var tem=document.getElementById(order-1)
-                                console.log(tem.value())   ;
                             }
                             console.log(data);
                         }
